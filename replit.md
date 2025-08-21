@@ -1,8 +1,8 @@
-# PropertyHub - Real Estate Platform
+# StudentShare - Student Accommodation Platform
 
 ## Overview
 
-PropertyHub is a full-stack real estate platform built with modern web technologies. It provides a comprehensive solution for property listings, search functionality, and inquiry management. The application serves both property seekers and property owners, offering features for browsing, listing, and managing real estate properties.
+StudentShare is a specialized platform for South African students seeking shared accommodation outside university residences. The platform connects students looking for flatmates, enables rent cost sharing, and provides landlords with comprehensive tenant information for communes, houses, and flats in surrounding suburbs and townships. Built with modern web technologies for seamless roommate matching and accommodation management.
 
 ## System Architecture
 
@@ -35,30 +35,37 @@ The application follows a monorepo structure with clear separation between clien
 ## Key Components
 
 ### Database Schema
-The application uses three main entities:
+The application uses core entities for student accommodation sharing:
 
-1. **Users Table**: Stores user authentication and profile information
-   - Fields: id, username, password, email, firstName, lastName, phone, createdAt
-   - Handles property owners and potential buyers/renters
+1. **Users Table**: Student and landlord profiles
+   - Fields: id, username, password, email, firstName, lastName, phone, university, studyField, yearOfStudy
+   - Student lifestyle preferences, bio, profile images for compatibility matching
+   - Handles both students seeking accommodation and property landlords
 
-2. **Properties Table**: Core property listing data
-   - Fields: title, description, address, location details, price, property type, listing type
-   - Property attributes: bedrooms, bathrooms, square footage, year built
-   - Metadata: images array, amenities array, owner reference, active status
-   - Supports multiple listing types: sale, rent, lease
+2. **Accommodations Table**: Student housing listings
+   - Fields: title, description, address, area, city, province, monthlyRent, accommodationType
+   - Room details: totalRooms, availableRooms, bathrooms
+   - Features: hasWifi, hasParking, petsAllowed, images, amenities
+   - Student-specific: nearbyUniversities, transportLinks, houseRules
+   - Supports accommodation types: house, apartment, commune, backyard_room
 
-3. **Inquiries Table**: Contact/interest tracking
-   - Links properties to potential customers
-   - Captures inquiry details and contact information
-   - Categorizes inquiry types: viewing, purchase, rental, general
+3. **Roommates Table**: Current accommodation occupants
+   - Links students to their current accommodation with rent share details
+   - Tracks move-in dates and monthly payment amounts
+
+4. **Applications Table**: Student accommodation applications
+   - Links students to accommodations they're interested in
+   - Captures application messages, preferred move-in dates, budget ranges
+   - Application status tracking: pending, approved, rejected
 
 ### Frontend Architecture
 
 **Component Structure:**
-- **Pages**: Home, Properties listing, Property details, List property form
+- **Pages**: Home, Accommodations listing, Accommodation details, List accommodation form
 - **UI Components**: Reusable shadcn/ui components for consistent design
-- **Feature Components**: Property cards, search filters, contact forms, mortgage calculator
-- **Layout Components**: Header navigation, responsive design elements
+- **Feature Components**: Accommodation cards, search filters, application forms, rent split calculator
+- **Student Components**: Roommate profiles, compatibility matching, cost sharing tools
+- **Layout Components**: Header navigation with student-focused branding, responsive design
 
 **State Management:**
 - TanStack Query for server state caching and synchronization
@@ -86,25 +93,25 @@ The application uses three main entities:
 
 ## Data Flow
 
-### Property Search Flow
-1. User enters search criteria on frontend
-2. Frontend sends filtered GET request to `/api/properties`
-3. Backend applies filters and queries database
+### Accommodation Search Flow
+1. Student enters search criteria (location, university, accommodation type, budget)
+2. Frontend sends filtered GET request to `/api/accommodations`
+3. Backend applies student-specific filters and queries database
 4. Results cached by TanStack Query for performance
-5. Property cards rendered with optimized images
+5. Accommodation cards with roommate count and rent split information
 
-### Property Listing Flow
-1. Owner fills out property listing form
-2. Form validation with Zod schemas
-3. POST request to `/api/properties` endpoint
-4. Server validates and stores property data
+### Accommodation Listing Flow
+1. Landlord fills out accommodation listing form with student-specific details
+2. Form validation includes South African provinces, universities, and accommodation types
+3. POST request to `/api/accommodations` endpoint
+4. Server validates and stores accommodation data with student amenities
 5. Success confirmation and cache invalidation
 
-### Inquiry Process
-1. Interested party submits contact form
-2. Inquiry linked to specific property
-3. Property owner can view inquiries
-4. Email notifications (planned feature)
+### Student Application Process
+1. Student submits application with move-in date and budget preferences
+2. Application linked to specific accommodation with personal message
+3. Landlord can view applications with student profile information
+4. Application status tracking and communication system
 
 ## External Dependencies
 
@@ -142,8 +149,16 @@ The application uses three main entities:
 3. Static file serving in production mode
 4. Development mode uses Vite middleware for HMR
 
+## Recent Changes
+- August 21, 2025: Transformed from property marketplace to specialized student accommodation platform
+- Converted all property entities to accommodation entities in database schema and backend routes
+- Built student-focused frontend with accommodation search, roommate profiles, and rent calculators
+- Updated branding to "StudentShare" targeting South African university students
+- Created new accommodation listing, search, and application functionality
+
 ## Changelog
-- June 24, 2025. Initial setup
+- June 24, 2025: Initial property marketplace setup
+- August 21, 2025: Complete transformation to student accommodation sharing platform
 
 ## User Preferences
 
