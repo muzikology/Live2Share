@@ -1,22 +1,22 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertPropertySchema, insertInquirySchema } from "@shared/schema";
+import { insertAccommodationSchema, insertApplicationSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Property routes
-  app.get("/api/properties", async (req, res) => {
+  // Accommodation routes
+  app.get("/api/accommodations", async (req, res) => {
     try {
       const filters = {
         city: req.query.city as string,
-        state: req.query.state as string,
-        propertyType: req.query.propertyType as string,
-        listingType: req.query.listingType as string,
-        minPrice: req.query.minPrice ? parseInt(req.query.minPrice as string) : undefined,
-        maxPrice: req.query.maxPrice ? parseInt(req.query.maxPrice as string) : undefined,
-        bedrooms: req.query.bedrooms ? parseInt(req.query.bedrooms as string) : undefined,
-        bathrooms: req.query.bathrooms ? parseInt(req.query.bathrooms as string) : undefined,
+        province: req.query.province as string,
+        area: req.query.area as string,
+        accommodationType: req.query.accommodationType as string,
+        minRent: req.query.minRent ? parseInt(req.query.minRent as string) : undefined,
+        maxRent: req.query.maxRent ? parseInt(req.query.maxRent as string) : undefined,
+        availableRooms: req.query.availableRooms ? parseInt(req.query.availableRooms as string) : undefined,
+        university: req.query.university as string,
       };
 
       // Remove undefined values
@@ -24,96 +24,106 @@ export async function registerRoutes(app: Express): Promise<Server> {
         Object.entries(filters).filter(([_, value]) => value !== undefined)
       );
 
-      const properties = await storage.getProperties(cleanFilters);
-      res.json(properties);
+      const accommodations = await storage.getAccommodations(cleanFilters);
+      res.json(accommodations);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch properties" });
+      res.status(500).json({ message: "Failed to fetch accommodations" });
     }
   });
 
-  app.get("/api/properties/:id", async (req, res) => {
+  app.get("/api/accommodations/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const property = await storage.getProperty(id);
+      const accommodation = await storage.getAccommodation(id);
       
-      if (!property) {
-        return res.status(404).json({ message: "Property not found" });
+      if (!accommodation) {
+        return res.status(404).json({ message: "Accommodation not found" });
       }
       
-      res.json(property);
+      res.json(accommodation);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch property" });
+      res.status(500).json({ message: "Failed to fetch accommodation" });
     }
   });
 
-  app.post("/api/properties", async (req, res) => {
+  app.get("/api/accommodations/:id/roommates", async (req, res) => {
     try {
-      const validatedData = insertPropertySchema.parse(req.body);
-      const property = await storage.createProperty(validatedData);
-      res.status(201).json(property);
+      const accommodationId = parseInt(req.params.id);
+      const roommates = await storage.getCurrentRoommatesForAccommodation(accommodationId);
+      res.json(roommates);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch roommates" });
+    }
+  });
+
+  app.post("/api/accommodations", async (req, res) => {
+    try {
+      const validatedData = insertAccommodationSchema.parse(req.body);
+      const accommodation = await storage.createAccommodation(validatedData);
+      res.status(201).json(accommodation);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid property data", errors: error.errors });
+        return res.status(400).json({ message: "Invalid accommodation data", errors: error.errors });
       }
-      res.status(500).json({ message: "Failed to create property" });
+      res.status(500).json({ message: "Failed to create accommodation" });
     }
   });
 
-  app.put("/api/properties/:id", async (req, res) => {
+  app.put("/api/accommodations/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const validatedData = insertPropertySchema.partial().parse(req.body);
-      const property = await storage.updateProperty(id, validatedData);
+      const validatedData = insertAccommodationSchema.partial().parse(req.body);
+      const accommodation = await storage.updateAccommodation(id, validatedData);
       
-      if (!property) {
-        return res.status(404).json({ message: "Property not found" });
+      if (!accommodation) {
+        return res.status(404).json({ message: "Accommodation not found" });
       }
       
-      res.json(property);
+      res.json(accommodation);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid property data", errors: error.errors });
+        return res.status(400).json({ message: "Invalid accommodation data", errors: error.errors });
       }
-      res.status(500).json({ message: "Failed to update property" });
+      res.status(500).json({ message: "Failed to update accommodation" });
     }
   });
 
-  app.delete("/api/properties/:id", async (req, res) => {
+  app.delete("/api/accommodations/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const success = await storage.deleteProperty(id);
+      const success = await storage.deleteAccommodation(id);
       
       if (!success) {
-        return res.status(404).json({ message: "Property not found" });
+        return res.status(404).json({ message: "Accommodation not found" });
       }
       
-      res.json({ message: "Property deleted successfully" });
+      res.json({ message: "Accommodation deleted successfully" });
     } catch (error) {
-      res.status(500).json({ message: "Failed to delete property" });
+      res.status(500).json({ message: "Failed to delete accommodation" });
     }
   });
 
-  // Inquiry routes
-  app.post("/api/inquiries", async (req, res) => {
+  // Application routes
+  app.post("/api/applications", async (req, res) => {
     try {
-      const validatedData = insertInquirySchema.parse(req.body);
-      const inquiry = await storage.createInquiry(validatedData);
-      res.status(201).json(inquiry);
+      const validatedData = insertApplicationSchema.parse(req.body);
+      const application = await storage.createApplication(validatedData);
+      res.status(201).json(application);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid inquiry data", errors: error.errors });
+        return res.status(400).json({ message: "Invalid application data", errors: error.errors });
       }
-      res.status(500).json({ message: "Failed to create inquiry" });
+      res.status(500).json({ message: "Failed to create application" });
     }
   });
 
-  app.get("/api/properties/:id/inquiries", async (req, res) => {
+  app.get("/api/accommodations/:id/applications", async (req, res) => {
     try {
-      const propertyId = parseInt(req.params.id);
-      const inquiries = await storage.getInquiriesForProperty(propertyId);
-      res.json(inquiries);
+      const accommodationId = parseInt(req.params.id);
+      const applications = await storage.getApplicationsForAccommodation(accommodationId);
+      res.json(applications);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch inquiries" });
+      res.status(500).json({ message: "Failed to fetch applications" });
     }
   });
 
@@ -125,11 +135,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json([]);
       }
 
-      const properties = await storage.getProperties();
+      const accommodations = await storage.getAccommodations();
       const suggestions = Array.from(new Set([
-        ...properties.map(p => p.city),
-        ...properties.map(p => p.state),
-        ...properties.map(p => `${p.city}, ${p.state}`),
+        ...accommodations.map(a => a.city),
+        ...accommodations.map(a => a.area),
+        ...accommodations.map(a => a.province),
+        ...accommodations.flatMap(a => a.nearbyUniversities),
+        ...accommodations.map(a => `${a.area}, ${a.city}`),
       ]))
         .filter(suggestion => 
           suggestion.toLowerCase().includes(query.toLowerCase())

@@ -5,20 +5,20 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
-import Properties from "@/pages/properties";
-import PropertyDetails from "@/pages/property-details";
-import ListProperty from "@/pages/list-property";
+import Accommodations from "@/pages/accommodations";
+import AccommodationDetails from "@/pages/accommodation-details";
+import ListAccommodation from "@/pages/list-accommodation";
 import Header from "@/components/header";
 
 function Router() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/properties" component={Properties} />
-        <Route path="/property/:id" component={PropertyDetails} />
-        <Route path="/list-property" component={ListProperty} />
+        <Route path="/accommodations" component={Accommodations} />
+        <Route path="/accommodation/:id" component={AccommodationDetails} />
+        <Route path="/list-accommodation" component={ListAccommodation} />
         <Route component={NotFound} />
       </Switch>
     </div>
