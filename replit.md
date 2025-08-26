@@ -6,26 +6,27 @@ StudentShare is a specialized platform for South African students seeking shared
 
 ## System Architecture
 
-### Full-Stack Architecture
-The application follows a monorepo structure with clear separation between client and server code:
+### Mobile-First Architecture
+The application now uses a cross-platform mobile approach with separate frontend and backend:
 
-- **Frontend**: React-based SPA with TypeScript
-- **Backend**: Express.js REST API with TypeScript
-- **Database**: PostgreSQL with Drizzle ORM
-- **Deployment**: Configured for Replit with autoscale deployment
+- **Mobile App**: Flutter (Dart) with cross-platform support (Android/iOS)
+- **Backend**: Express.js REST API with TypeScript (existing)
+- **Database**: PostgreSQL with Drizzle ORM (existing)
+- **Architecture**: Mobile app connects to REST API backend
+- **Deployment**: Flutter app builds to APK/IPA, backend on Replit
 
 ### Technology Stack
 
-**Frontend Technologies:**
-- React 18 with TypeScript
-- Vite for build tooling and development server
-- Wouter for client-side routing
-- TanStack Query for server state management
-- shadcn/ui component library with Radix UI primitives
-- Tailwind CSS for styling
-- React Hook Form with Zod validation
+**Mobile App Technologies:**
+- Flutter 3.10+ with Dart language
+- Riverpod for state management
+- GoRouter for navigation
+- Material Design 3 for UI components
+- Dio for HTTP API requests
+- Cached Network Image for image loading
+- Form Builder for form validation
 
-**Backend Technologies:**
+**Backend Technologies (Existing):**
 - Express.js with TypeScript
 - Drizzle ORM for database operations
 - Neon Database (PostgreSQL) for cloud database
@@ -60,22 +61,23 @@ The application uses core entities for student accommodation sharing:
 
 ### Frontend Architecture
 
-**Component Structure:**
+**Mobile App Structure:**
 - **Pages**: Home, Accommodations listing, Accommodation details, List accommodation form
-- **UI Components**: Reusable shadcn/ui components for consistent design
-- **Feature Components**: Accommodation cards, search filters, application forms, rent split calculator
-- **Student Components**: Roommate profiles, compatibility matching, cost sharing tools
-- **Layout Components**: Header navigation with student-focused branding, responsive design
+- **Widgets**: Reusable Flutter widgets with Material Design
+- **Feature Widgets**: Accommodation cards, search filters, application forms, rent split calculator
+- **Student Widgets**: Roommate profiles, compatibility matching, cost sharing tools
+- **Navigation**: Mobile-optimized navigation with bottom nav and app bars
 
 **State Management:**
-- TanStack Query for server state caching and synchronization
-- Local state with React hooks for UI interactions
-- Form state managed with React Hook Form
+- Riverpod for reactive state management and dependency injection
+- FutureProvider for API data fetching and caching
+- Local state with StatefulWidget for UI interactions
+- Form state managed with form controllers
 
-**Routing Strategy:**
-- Client-side routing with Wouter
-- Dynamic routes for property details
-- Query parameter handling for search filters
+**Navigation Strategy:**
+- Declarative routing with GoRouter
+- Named routes for type-safe navigation
+- Deep linking support for mobile platforms
 
 ### Backend Architecture
 
@@ -150,6 +152,12 @@ The application uses core entities for student accommodation sharing:
 4. Development mode uses Vite middleware for HMR
 
 ## Recent Changes
+- August 26, 2025: **Complete transformation to Flutter mobile app**
+  - Migrated from React web app to cross-platform Flutter mobile application
+  - Built native mobile UI with Material Design 3 for better student user experience
+  - Maintained all existing features: accommodation search, roommate profiles, rent calculators
+  - Created mobile-optimized components and responsive layouts
+  - Integrated with existing Express.js backend API
 - August 21, 2025: Transformed from property marketplace to specialized student accommodation platform
 - Converted all property entities to accommodation entities in database schema and backend routes
 - Built student-focused frontend with accommodation search, roommate profiles, and rent calculators
@@ -159,6 +167,7 @@ The application uses core entities for student accommodation sharing:
 ## Changelog
 - June 24, 2025: Initial property marketplace setup
 - August 21, 2025: Complete transformation to student accommodation sharing platform
+- August 26, 2025: Migration to Flutter mobile app with cross-platform support
 
 ## User Preferences
 
