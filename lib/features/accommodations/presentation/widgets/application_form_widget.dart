@@ -271,8 +271,7 @@ class _ApplicationFormWidgetState extends ConsumerState<ApplicationFormWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  void dispose() {
       body: Column(
         children: [
           // Handle
