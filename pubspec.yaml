@@ -13,7 +13,7 @@ dependencies:
   
   # UI and Design
   cupertino_icons: ^1.0.6
-  material_color_utilities: ^0.8.0
+  material_color_utilities: ^0.11.1
   
   # State Management
   provider: ^6.1.1
@@ -32,7 +32,7 @@ dependencies:
   sqflite: ^2.3.0
   
   # Form Handling
-  flutter_form_builder: ^9.1.1
+  flutter_form_builder: ^10.2.0
   form_builder_validators: ^11.2.0
   
   # UI Components
