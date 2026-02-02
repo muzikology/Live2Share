@@ -4,7 +4,21 @@ import { storage } from "./storage";
 import { insertAccommodationSchema, insertApplicationSchema } from "@shared/schema";
 import { z } from "zod";
 
+// Import new route handlers
+import authRoutes from "./authRoutes";
+import userRoutes from "./userRoutes";
+import roommateRoutes from "./roommateRoutes";
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Register auth routes
+  app.use("/api/auth", authRoutes);
+  
+  // Register user routes
+  app.use("/api/users", userRoutes);
+  
+  // Register roommate routes
+  app.use("/api/roommates", roommateRoutes);
+
   // Accommodation routes
   app.get("/api/accommodations", async (req, res) => {
     try {
