@@ -9,6 +9,10 @@ import 'package:student_share/features/home/presentation/pages/home_page.dart';
 import 'package:student_share/features/applications/presentation/pages/applications_page.dart';
 import 'package:student_share/features/authentication/presentation/pages/login_page.dart';
 import 'package:student_share/features/authentication/presentation/pages/signup_page.dart';
+import 'package:student_share/features/accommodations/presentation/pages/property_details_page.dart';
+import 'package:student_share/features/messages/presentation/pages/messages_page.dart';
+import 'package:student_share/features/messages/presentation/pages/chat_page.dart';
+import 'package:student_share/features/profile/presentation/pages/profile_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: StudentShareApp()));
@@ -56,9 +60,26 @@ final _router = GoRouter(
     GoRoute(
       path: '/accommodation/:id',
       name: 'accommodation-details',
-      builder: (context, state) => AccommodationDetailsPage(
+      builder: (context, state) => PropertyDetailsPage(
         accommodationId: int.parse(state.pathParameters['id']!),
       ),
+    ),
+    GoRoute(
+      path: '/messages',
+      name: 'messages',
+      builder: (context, state) => const MessagesPage(),
+    ),
+    GoRoute(
+      path: '/messages/conversation/:userId',
+      name: 'chat',
+      builder: (context, state) => ChatPage(
+        otherUserId: int.parse(state.pathParameters['userId']!),
+      ),
+    ),
+    GoRoute(
+      path: '/profile',
+      name: 'profile',
+      builder: (context, state) => const ProfilePage(),
     ),
     GoRoute(
       path: '/list-accommodation',
