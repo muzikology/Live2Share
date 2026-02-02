@@ -8,6 +8,9 @@ import { z } from "zod";
 import authRoutes from "./authRoutes";
 import userRoutes from "./userRoutes";
 import roommateRoutes from "./roommateRoutes";
+import accommodationRoutes from "./accommodationRoutes";
+import messageRoutes from "./messageRoutes";
+import { setupWebSocket } from "./websocket";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Register auth routes
@@ -18,8 +21,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Register roommate routes
   app.use("/api/roommates", roommateRoutes);
+  
+  // Register accommodation routes
+  app.use("/api/accommodations", accommodationRoutes);
+  
+  // Register message routes
+  app.use("/api/messages", messageRoutes);
 
-  // Accommodation routes
+  // Legacy accommodation routes (keep for backwards compatibility)
   app.get("/api/accommodations", async (req, res) => {
     try {
       const filters = {
@@ -169,5 +178,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+  
+  // Setup WebSocket for real-time messaging
+  setupWebSocket(httpServer);
+  
   return httpServer;
 }
