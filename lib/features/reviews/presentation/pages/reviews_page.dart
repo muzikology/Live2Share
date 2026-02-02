@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/models/models.dart';
-import '../../../../core/services/api_service.dart';
+import '../../../../core/services/dio_api_service.dart';
 import '../widgets/review_card.dart';
 import '../widgets/review_summary.dart';
 import 'review_form_page.dart';

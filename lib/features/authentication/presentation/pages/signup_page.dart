@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_share/core/services/auth_service.dart';
-import 'package:student_share/core/services/api_service.dart';
+import 'package:student_share/core/services/dio_api_service.dart';
 
 class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});

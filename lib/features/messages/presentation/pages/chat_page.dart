@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:student_share/core/models/models.dart';
-import 'package:student_share/core/services/api_service.dart';
+import 'package:student_share/core/services/dio_api_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 

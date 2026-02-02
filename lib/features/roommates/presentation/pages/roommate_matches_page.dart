@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/models/models.dart';
-import '../../../../core/services/api_service.dart';
+import '../../../../core/services/dio_api_service.dart';
 import 'roommate_profile_page.dart';
 
 class RoommateMatch {

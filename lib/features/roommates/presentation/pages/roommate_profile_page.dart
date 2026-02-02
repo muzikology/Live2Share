@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/models/models.dart';
-import '../../../../core/services/api_service.dart';
+import '../../../../core/services/dio_api_service.dart';
 
 class CompatibilityBreakdown {
   final double lifestyleScore;
