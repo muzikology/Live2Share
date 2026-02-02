@@ -13,6 +13,8 @@ import 'package:student_share/features/accommodations/presentation/pages/propert
 import 'package:student_share/features/messages/presentation/pages/messages_page.dart';
 import 'package:student_share/features/messages/presentation/pages/chat_page.dart';
 import 'package:student_share/features/profile/presentation/pages/profile_page.dart';
+import 'package:student_share/features/roommates/presentation/pages/roommate_matches_page.dart';
+import 'package:student_share/features/roommates/presentation/pages/roommate_requests_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: StudentShareApp()));
@@ -90,6 +92,16 @@ final _router = GoRouter(
       path: '/applications',
       name: 'applications',
       builder: (context, state) => const ApplicationsPage(),
+    ),
+    GoRoute(
+      path: '/roommates',
+      name: 'roommates',
+      builder: (context, state) => const RoommateMatchesPage(),
+    ),
+    GoRoute(
+      path: '/roommate-requests',
+      name: 'roommate-requests',
+      builder: (context, state) => const RoommateRequestsPage(),
     ),
   ],
 );
