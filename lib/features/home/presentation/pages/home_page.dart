@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'StudentShare',
+                                'Live2Share',
                                 style: theme.textTheme.headlineSmall?.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
                             ],
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () => context.push('/profile'),
                             icon: const Icon(
                               Icons.person_outline,
                               color: Colors.white,
@@ -86,7 +86,7 @@ class HomePage extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton.icon(
-                              onPressed: () => context.go('/accommodations'),
+                              onPressed: () => context.push('/accommodations'),
                               icon: const Icon(Icons.search),
                               label: const Text('Find Accommodation'),
                               style: ElevatedButton.styleFrom(
@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: OutlinedButton.icon(
-                              onPressed: () => context.go('/list-accommodation'),
+                              onPressed: () => context.push('/list-accommodation'),
                               icon: const Icon(Icons.add_home),
                               label: const Text('List Your Place'),
                               style: OutlinedButton.styleFrom(

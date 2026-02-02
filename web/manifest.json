@@ -1,11 +1,11 @@
 {
-    "name": "student_share",
-    "short_name": "student_share",
+    "name": "Live2Share",
+    "short_name": "Live2Share",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Find your perfect student accommodation and connect with roommates.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

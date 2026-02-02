@@ -26,7 +26,7 @@ class StudentShareApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'StudentShare',
+      title: 'Live2Share',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
@@ -37,7 +37,7 @@ class StudentShareApp extends StatelessWidget {
 }
 
 final _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/',
