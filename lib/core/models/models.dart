@@ -292,3 +292,67 @@ class Conversation {
     );
   }
 }
+
+class Review {
+  final int id;
+  final int userId;
+  final int accommodationId;
+  final double rating;
+  final String comment;
+  final double? cleanliness;
+  final double? communication;
+  final double? accuracy;
+  final double? location;
+  final double? valueForMoney;
+  final User reviewer;
+  final DateTime createdAt;
+
+  Review({
+    required this.id,
+    required this.userId,
+    required this.accommodationId,
+    required this.rating,
+    required this.comment,
+    this.cleanliness,
+    this.communication,
+    this.accuracy,
+    this.location,
+    this.valueForMoney,
+    required this.reviewer,
+    required this.createdAt,
+  });
+
+  factory Review.fromJson(Map<String, dynamic> json) {
+    return Review(
+      id: json['id'],
+      userId: json['userId'],
+      accommodationId: json['accommodationId'],
+      rating: double.parse(json['rating'].toString()),
+      comment: json['comment'],
+      cleanliness: json['cleanliness'] != null ? double.parse(json['cleanliness'].toString()) : null,
+      communication: json['communication'] != null ? double.parse(json['communication'].toString()) : null,
+      accuracy: json['accuracy'] != null ? double.parse(json['accuracy'].toString()) : null,
+      location: json['location'] != null ? double.parse(json['location'].toString()) : null,
+      valueForMoney: json['valueForMoney'] != null ? double.parse(json['valueForMoney'].toString()) : null,
+      reviewer: User.fromJson(json['reviewer']),
+      createdAt: DateTime.parse(json['createdAt']),
+    );
+  }
+}
+
+class ReviewSummaryData {
+  final double averageRating;
+  final int totalReviews;
+
+  ReviewSummaryData({
+    required this.averageRating,
+    required this.totalReviews,
+  });
+
+  factory ReviewSummaryData.fromJson(Map<String, dynamic> json) {
+    return ReviewSummaryData(
+      averageRating: double.parse(json['averageRating']?.toString() ?? '0'),
+      totalReviews: json['totalReviews'] ?? 0,
+    );
+  }
+}

@@ -10,6 +10,7 @@ import userRoutes from "./userRoutes";
 import roommateRoutes from "./roommateRoutes";
 import accommodationRoutes from "./accommodationRoutes";
 import messageRoutes from "./messageRoutes";
+import reviewRoutes from "./reviewRoutes";
 import { setupWebSocket } from "./websocket";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -27,6 +28,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Register message routes
   app.use("/api/messages", messageRoutes);
+  
+  // Register review routes
+  app.use("/api/reviews", reviewRoutes);
 
   // Legacy accommodation routes (keep for backwards compatibility)
   app.get("/api/accommodations", async (req, res) => {

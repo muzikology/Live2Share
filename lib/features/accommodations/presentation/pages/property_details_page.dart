@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:student_share/core/models/models.dart';
 import 'package:student_share/core/services/api_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../../reviews/presentation/pages/reviews_page.dart';
 
 class PropertyDetailsPage extends ConsumerStatefulWidget {
   final int accommodationId;
@@ -330,6 +331,63 @@ class _PropertyDetailsPageState extends ConsumerState<PropertyDetailsPage> {
                         )),
                     const SizedBox(height: 24),
                   ],
+
+                  // Reviews Section
+                  Text(
+                    'Reviews',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 12),
+                  Card(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReviewsPage(
+                              accommodationId: accommodation.id,
+                              accommodationName: accommodation.title,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Icon(Icons.star, color: Colors.amber, size: 28),
+                            SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'View all reviews',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    'See what tenants are saying',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(Icons.chevron_right, color: Colors.grey),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
 
                   // Landlord Info
                   if (accommodation.landlord != null) ...[
